@@ -114,19 +114,11 @@
 
                             {% for challenge in challenges.all %}
                             {% with challenge.challenge_definition as definition %}
-                            {% if challenge.acquired_on %}
                             <span data-toggle="tooltip" title="(ACQUIS) {{ definition.name }} - {{ challenge.acquired_on|naturalday }}" class="rounded-circle bg-light ">
                                 <svg class="text-success mx-2 my-2" width="16" height="16" fill="currentColor">
                                     <use xlink:href="{% static 'svg/bootstrap-icons.svg' %}#{{ definition.icon_name|default:'award' }}" />
                                 </svg>
                             </span>
-                            {% else %}
-                            <span data-toggle="tooltip" title="(OUVERT) {{ definition.name }}" class="rounded-circle bg-black">
-                                <svg class="mx-2 my-2 text-white" width="16" height="16" fill="currentColor">
-                                    <use xlink:href="{% static 'svg/bootstrap-icons.svg' %}#{{ definition.icon_name|default:'award' }}" />
-                                </svg>
-                            </span>
-                            {% endif %}
                             {% endwith %}
                             {% endfor %}
                         </div>

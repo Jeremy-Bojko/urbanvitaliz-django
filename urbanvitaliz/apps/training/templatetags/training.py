@@ -33,7 +33,11 @@ def challenge_acquire(challenge):
 def get_challenges_for(user, acquired=None):
     """Return acquired challenges for user"""
     # TODO remove second parameter after discussion from the template
-    return models.Challenge.acquired_objects.order_by("-acquired_on").filter(user=user)
+    return (
+        models.Challenge.acquired_objects.filter(user=user)
+        .distinct("challenge_definition")
+        .order_by("challenge_definition", "-acquired_on")
+    )
 
 
 # eof
