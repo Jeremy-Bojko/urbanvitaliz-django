@@ -26,6 +26,7 @@ from urbanvitaliz.apps.projects.utils import assign_advisor, assign_collaborator
 from urbanvitaliz.utils import login
 
 from .. import models
+from .. import subscription
 
 ########################################################################
 # Project administration
@@ -226,10 +227,7 @@ def test_promote_referent_available_for_advisor(request, client):
 
     powner = baker.make(projects_models.ProjectMember, project=project, is_owner=False)
     pmember = baker.make(
-        projects_models.ProjectMember,
-        project=project,
-        member=crm_user,
-        is_owner=False
+        projects_models.ProjectMember, project=project, member=crm_user, is_owner=False
     )
 
     url = reverse("projects-project-promote-referent", args=[project.id, crm_user.id])
@@ -246,6 +244,33 @@ def test_promote_referent_available_for_advisor(request, client):
     # project phone number is updated to current owner one's
     project.refresh_from_db()
     assert project.phone == pmember.member.profile.phone_no
+
+
+@pytest.mark.django_db
+def test_promote_referent_updates_subscriptions(request, client):
+    site = get_current_site(request)
+    project = Recipe(models.Project, sites=[site]).make()
+
+    old_owner = baker.make(
+        projects_models.ProjectMember, project=project, is_owner=True
+    )
+    old_owner.member.profile.sites.add(site)
+
+    new_owner = baker.make(
+        projects_models.ProjectMember, project=project, is_owner=False
+    )
+    new_owner.member.profile.sites.add(site)
+
+    url = reverse(
+        "projects-project-promote-referent", args=[project.id, new_owner.member.id]
+    )
+    with login(client, groups=["example_com_staff"]):
+        response = client.post(url)
+
+    assert response.status_code == 302
+
+    assert not subscription.is_subscribed_to_project(site, old_owner.member, project)
+    assert subscription.is_subscribed_to_project(site, new_owner.member, project)
 
 
 #####################################################################

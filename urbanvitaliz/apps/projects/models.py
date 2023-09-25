@@ -974,6 +974,34 @@ class Document(models.Model):
         return f"Document {self.id}"
 
 
+class SubscriptionManager(models.Manager):
+    """Manager for active project subscription"""
+
+
+class SubscriptionOnSiteManager(CurrentSiteManager, SubscriptionManager):
+    pass
+
+
+class Subscription(models.Model):
+    """When someone subscribes a project to receive notifications"""
+
+    objects = SubscriptionManager()
+    on_site = SubscriptionOnSiteManager()
+
+    site = models.ForeignKey(Site, on_delete=models.CASCADE)
+
+    created_on = models.DateTimeField(
+        default=timezone.now, verbose_name="Date de souscription"
+    )
+
+    user = models.ForeignKey(
+        auth_models.User, related_name="project_subscriptions", on_delete=models.CASCADE
+    )
+    project = models.ForeignKey(
+        Project, related_name="user_subscriptions", on_delete=models.CASCADE
+    )
+
+
 ########################################################################
 # helpers / utils
 ########################################################################

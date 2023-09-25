@@ -30,7 +30,7 @@ from urbanvitaliz.apps.invites.forms import InviteForm
 from urbanvitaliz.utils import has_perm_or_403, is_staff_for_site_or_403
 from urbanvitaliz import verbs
 
-from .. import forms, models
+from .. import forms, models, subscription
 from ..utils import (
     is_regional_actor_for_project,
     unassign_advisor,
@@ -209,10 +209,17 @@ def promote_collaborator_as_referent(request, project_id, user_id=None):
     members = models.ProjectMember.objects.filter(project=project)
 
     with transaction.atomic():
+        old_owner = project.owner
+
         members.update(is_owner=False)
         members.filter(member=user).update(is_owner=True)
         project.phone = user.profile.phone_no
         project.save()
+
+        new_owner = project.owner
+
+        subscription.unsubscribe_from_project(request.site, old_owner, project)
+        subscription.subscribe_to_project(request.site, new_owner, project)
 
     return redirect(reverse("projects-project-administration", args=[project_id]))
 

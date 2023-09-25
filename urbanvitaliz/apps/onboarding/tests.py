@@ -11,6 +11,7 @@ from urbanvitaliz.apps.home import models as home_models
 from urbanvitaliz.apps.onboarding import models as onboarding_models
 from urbanvitaliz.apps.addressbook import models as addressbook_models
 from urbanvitaliz.apps.projects import models as projects_models
+from urbanvitaliz.apps.projects import subscription
 from urbanvitaliz.apps.invites import models as invites_models
 from urbanvitaliz.utils import login
 
@@ -225,6 +226,42 @@ def test_onbording_do_not_replace_existing_user_email_when_logged_in(request, cl
     user.refresh_from_db()  # fonctionne dans ce contexte
 
     assert user.email == user_email
+
+
+@pytest.mark.django_db
+def test_onboarding_subscribes_user_to_project(request, client):
+    onboarding = onboarding_models.Onboarding.objects.first()
+
+    site = get_current_site(request)
+
+    baker.make(
+        home_models.SiteConfiguration,
+        site=site,
+        onboarding=onboarding,
+    )
+
+    data = {
+        "name": "a project",
+        "email": "a@exAmpLe.Com",
+        "location": "some place",
+        "org_name": "MyOrg",
+        "phone": "+3893889393399",
+        "first_name": "john",
+        "last_name": "doe",
+        "description": "a description",
+        "impediment_kinds": ["Autre"],
+        "response_0": "blah",
+        "impediments": "some impediment",
+    }
+
+    email = data["email"].lower()
+    with login(client, username=email):
+        response = client.post(reverse("projects-onboarding"), data=data)
+
+    project = projects_models.Project.objects.first()
+    assert response.status_code == 302
+
+    assert subscription.is_subscribed_to_project(site, project.owner, project)
 
 
 @pytest.mark.django_db
@@ -665,6 +702,41 @@ def test_created_prefilled_project_stores_initial_info(request, client):
     note = projects_models.Note.objects.first()
     assert data["description"] in note.content
     assert note.public is True
+
+
+@pytest.mark.django_db
+def test_created_prefilled_project_subscribes_project_owner(request, client):
+    onboarding = onboarding_models.Onboarding.objects.first()
+    site = get_current_site(request)
+    baker.make(
+        home_models.SiteConfiguration,
+        site=site,
+        onboarding=onboarding,
+    )
+
+    data = {
+        "name": "a project",
+        "email": "a@example.com",
+        "description": "my desc",
+        "postal_code": "59800",
+        "location": "some place",
+        "first_name": "john",
+        "phone": "0610101010",
+        "last_name": "doe",
+        "org_name": "MyOrg",
+        "response_0": "blah",
+        "impediment_kinds": ["Autre"],
+        "impediments": "some impediment",
+    }
+
+    with login(client, groups=["example_com_advisor"]):
+        response = client.post(reverse("projects-project-prefill"), data=data)
+
+    assert response.status_code == 302
+
+    project = projects_models.Project.on_site.first()
+
+    assert subscription.is_subscribed_to_project(site, project.owner, project)
 
 
 ########################################################################
