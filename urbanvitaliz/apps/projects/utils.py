@@ -22,6 +22,7 @@ from urbanvitaliz import utils as uv_utils
 from urbanvitaliz.apps.reminders import api
 
 from . import models
+from . import subscription
 
 
 @transaction.atomic
@@ -39,9 +40,15 @@ def assign_collaborator(user, project, is_owner=False):
             print(f"Unable to find permission <{perm}>, aborting.")
             raise e
 
+    # FIXME Handle case where a user is both assigned as owner and regular collab
+
     _, created = models.ProjectMember.objects.get_or_create(
         project=project, member=user, is_owner=is_owner
     )
+
+    if is_owner and created:
+        site = Site.objects.get_current()
+        subscription.subscribe_to_project(site, user, project)
 
     return created
 
@@ -58,6 +65,9 @@ def unassign_collaborator(user, project):
             remove_perm(perm, user, project)
         except auth_models.Permission.DoesNotExist:
             pass
+
+    site = Site.objects.get_current()
+    subscription.unsubscribe_from_project(site, user, project)
 
     models.ProjectMember.objects.filter(
         member=user,
@@ -362,7 +372,8 @@ def make_rsvp_link(rsvp, status):
 
 def create_reminder(days, task, user, origin):
     """
-    Create a reminder using the reminder API and schedule a RSVP to send to the target user
+    Create a reminder using the reminder API and schedule a RSVP to send to the
+    target user
     """
     if user.is_anonymous:
         return

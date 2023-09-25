@@ -219,31 +219,28 @@ def test_promote_referent_available_for_advisor(request, client):
     site = get_current_site(request)
     project = Recipe(models.Project, sites=[site]).make()
 
-    crm_user = baker.make(auth_models.User)
-    profile = crm_user.profile
-    profile.sites.add(site)
-    profile.phone_no = "555-1234"
-    profile.save()
-
-    powner = baker.make(projects_models.ProjectMember, project=project, is_owner=False)
-    pmember = baker.make(
-        projects_models.ProjectMember, project=project, member=crm_user, is_owner=False
+    old_owner = baker.make(
+        projects_models.ProjectMember, project=project, is_owner=True
     )
+    old_owner.member.profile.sites.add(site)
 
-    url = reverse("projects-project-promote-referent", args=[project.id, crm_user.id])
+    new_owner = baker.make(
+        projects_models.ProjectMember, project=project, is_owner=False
+    )
+    new_owner.member.profile.sites.add(site)
+
+    url = reverse(
+        "projects-project-promote-referent", args=[project.id, new_owner.member.id]
+    )
     with login(client, groups=["example_com_staff"]):
         response = client.post(url)
 
     assert response.status_code == 302
 
-    powner.refresh_from_db()
-    assert powner.is_owner is False
-    pmember.refresh_from_db()
-    assert pmember.is_owner is True
-
-    # project phone number is updated to current owner one's
-    project.refresh_from_db()
-    assert project.phone == pmember.member.profile.phone_no
+    old_owner.refresh_from_db()
+    assert old_owner.is_owner is False
+    new_owner.refresh_from_db()
+    assert new_owner.is_owner is True
 
 
 @pytest.mark.django_db

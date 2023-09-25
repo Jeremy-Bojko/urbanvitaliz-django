@@ -211,6 +211,7 @@ def promote_collaborator_as_referent(request, project_id, user_id=None):
     with transaction.atomic():
         old_owner = project.owner
 
+        # XXX collaborator states altered outside of assign_xxx functions (utils.py)
         members.update(is_owner=False)
         members.filter(member=user).update(is_owner=True)
         project.phone = user.profile.phone_no

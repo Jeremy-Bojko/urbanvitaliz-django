@@ -24,7 +24,6 @@ from urbanvitaliz.apps.geomatics import models as geomatics
 from urbanvitaliz.apps.invites import models as invites
 from urbanvitaliz.apps.projects import models as projects
 from urbanvitaliz.apps.projects import signals as projects_signals
-from urbanvitaliz.apps.projects import subscription
 from urbanvitaliz.apps.projects.utils import (
     assign_advisor,
     assign_collaborator,
@@ -95,7 +94,6 @@ def onboarding(request):
         onboarding_response.save()
 
         assign_collaborator(user, project, is_owner=True)
-        subscription.subscribe_to_project(request.site, user, project)
 
         create_initial_note(request.site, onboarding_response)
 
@@ -167,7 +165,6 @@ def create_project_prefilled(request):
         create_initial_note(request.site, onboarding_response)
 
         invite_user_to_project(request, user, project, is_new_user)
-        subscription.subscribe_to_project(request.site, user, project)
         notify_new_project(request.site, project, user)
 
         return redirect("projects-project-detail-knowledge", project_id=project.id)
