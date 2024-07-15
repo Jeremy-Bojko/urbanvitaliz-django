@@ -1,4 +1,4 @@
-version: "3.8"
+version: '3.8'
 
 services:
   app:
@@ -11,15 +11,16 @@ services:
         # Use -bullseye variants on local arm64/Apple Silicon.
         VARIANT: 3-bullseye
         # Optional Node.js version to install
-        NODE_VERSION: "lts/*"
+        NODE_VERSION: 'lts/*'
     volumes:
       - ..:/workspace:cached
-    command: python manage.py runserver 0.0.0.0:8000
+    command: python /workspace/manage.py migrate
     environment:
       POSTGRES_USER: postgres
       POSTGRES_DB: postgres
       POSTGRES_PASSWORD: postgres
       SECRET_KEY: SECRET_KEY
+      DB_HOST: db
     ports:
       - 8000:8000
 
@@ -29,7 +30,7 @@ services:
       dockerfile: docker/Dockerfile
       args:
         VARIANT: 3-bullseye
-        NODE_VERSION: "lts/*"
+        NODE_VERSION: 'lts/*'
     volumes:
       - ..:/workspace:cached
     working_dir: /workspace/recoco/frontend
