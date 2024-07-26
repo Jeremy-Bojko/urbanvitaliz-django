@@ -1,4 +1,6 @@
+<script>console.log("display_form.html")</script>
 {% if form.form_html %}
+    {% if include_media %}{{ form.media }}{% endif %}
     {% if form_show_errors %}
         {% include "dsrc_crispy_forms/errors.html" %}
     {% endif %}
@@ -6,6 +8,6 @@
 {% else %}
     {% include "dsrc_crispy_forms/uni_form.html" %}
 {% endif %}
-{% if form.helper.form_button != False %}
+{% comment %} {% if form.helper.form_button != False %}
     {% include "dsrc/core/blocks/buttons/button_group.html" %}
-{% endif %}
+{% endif %} {% endcomment %}
