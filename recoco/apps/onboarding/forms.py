@@ -11,11 +11,10 @@ import os
 
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV2Checkbox
+from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Fieldset, Layout
 from django import forms
 from django.shortcuts import reverse
-
-from recoco.apps.dsrc.forms import DsrcBaseForm
 
 from . import models
 
@@ -98,9 +97,10 @@ class SelectCommuneForm(forms.Form):
 ##################################################
 # Onboarding multi-step forms
 ##################################################
-class OnboardingEmailForm(DsrcBaseForm):
+class OnboardingEmailForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
         self.helper.form_id = "id-onboarding-email-form"  # The form id is used for validation, it must be set and unique in the page
         self.helper.form_method = "post"
         self.helper.action_button = {
@@ -128,9 +128,10 @@ class OnboardingEmailForm(DsrcBaseForm):
     )
 
 
-class OnboardingSignupForm(DsrcBaseForm):
+class OnboardingSignupForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
         self.helper.form_id = "id-onboarding-signup-form"  # The form id is used for validation, it must be set and unique in the page
         self.helper.form_method = "post"
         self.helper.action_button = {"submit": {"label": "Suivant"}}
@@ -203,9 +204,10 @@ class OnboardingSignupForm(DsrcBaseForm):
     captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox(api_params={"hl": "fr"}))
 
 
-class OnboardingProject(DsrcBaseForm):
+class OnboardingProject(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
         self.helper.form_id = "id-onboarding-project-form"  # The form id is used for validation, it must be set and unique in the page
         self.helper.form_method = "post"
         self.helper.form_tag = False
@@ -256,9 +258,10 @@ class OnboardingProject(DsrcBaseForm):
     )
 
 
-class PrefillSetuserForm(DsrcBaseForm):
+class PrefillSetuserForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
         self.helper.form_id = "id-prefill-setuser-form"  # The form id is used for validation, it must be set and unique in the page
         self.helper.form_method = "post"
         self.helper.action_button = {"submit": {"label": "Suivant"}}
@@ -308,9 +311,10 @@ class PrefillSetuserForm(DsrcBaseForm):
     )
 
 
-class PrefillProjectForm(DsrcBaseForm):
+class PrefillProjectForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
         self.helper.form_id = "id-prefill-project-form"  # The form id is used for validation, it must be set and unique in the page
         self.helper.form_method = "post"
         self.helper.form_tag = False

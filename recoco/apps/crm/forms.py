@@ -1,3 +1,4 @@
+from crispy_forms.helper import FormHelper
 from django import forms
 from markdownx.fields import MarkdownxFormField
 from taggit.forms import TagWidget
@@ -9,6 +10,11 @@ from . import models
 
 
 class SiteConfigurationForm(forms.ModelForm):
+    def __ini__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.js_validation = False
+
     class Meta:
         model = home_models.SiteConfiguration
 

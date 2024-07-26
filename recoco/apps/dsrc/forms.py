@@ -88,9 +88,10 @@ Example form that extends DsrcBaseForm.
 """
 
 
-class DsrcExampleForm(DsrcBaseForm):
+class DsrcExampleForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
         self.helper.form_id = "id-dsrc-example-form"  # The form id is used for validation, it must be set and unique in the page
         self.helper.form_class = "dsrc-color-primary"  # Theme override classes
         self.helper.form_method = "post"
@@ -101,15 +102,15 @@ class DsrcExampleForm(DsrcBaseForm):
                 "Créez votre compte",  # The first argument is the legend of the fieldset
                 "sample_name",
                 "sample_phone",
-                # "sample_email",
-                # "sample_password",
-                # "sample_postcode",
-                # "sample_description",
-                # "sample_checkbox",
-                # "sample_select",
-                # "sample_disabled_field",
-                # "sample_radio_group",
-                # "sample_checkbox_group",
+                "sample_email",
+                "sample_password",
+                "sample_postcode",
+                "sample_description",
+                "sample_checkbox",
+                "sample_select",
+                "sample_disabled_field",
+                "sample_radio_group",
+                "sample_checkbox_group",
             ),
         )
 
