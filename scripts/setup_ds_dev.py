@@ -50,7 +50,7 @@ def setup_ds_resources():
         # add department 57
         ds_resource.departments.add(Department.objects.get(code="57"))
         # load the DS schema (automatically done when you use celery async tasks)
-        load_ds_resource_schema.s(ds_resource.id)()
+        load_ds_resource_schema.delay(ds_resource.id)
 
 
 def setup_ds_folder():
@@ -68,7 +68,7 @@ def setup_ds_folder():
         return
 
     # create a ds folder attached to this reco (automatically done when you use celery async tasks)
-    update_or_create_ds_folder.s(recommendation_id=reco.id)()
+    update_or_create_ds_folder.delay(recommendation_id=reco.id)
 
 
 assert _detr_resource(), "Resource DETR not found."  # nosec
