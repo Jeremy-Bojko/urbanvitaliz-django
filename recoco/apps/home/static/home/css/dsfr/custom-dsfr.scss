@@ -62,20 +62,6 @@ a.fr-btn {
     &:not(.fr-btn--secondary) {
       color: white !important;
     }
-
-    &:hover {
-      &:not(.fr-btn--secondary) {
-        color: white !important;
-      }
-
-      &.fr-btn--secondary {
-        color: #000091 !important;
-      }
-    }
-
-    &.fr-btn--secondary {
-      color: #000091 !important;
-    }
   }
 }
 
