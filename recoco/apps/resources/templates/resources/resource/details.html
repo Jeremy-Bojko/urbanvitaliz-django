@@ -139,13 +139,13 @@
                         {% endif %}
                     </div>
                 {% endif %}
-                <div id="print" class="d-flex w-100 mt-2">
-                    <a onclick="window.print()" class="button blue w-100 text-center">
+                <div id="print" class="d-flex w-100 mt-3">
+                    <button onclick="window.print()" class="button blue w-100 text-center">
                         <svg class="bi align-middle me-2" width="18" height="18" fill="#0063CB">
                             <use xlink:href="{% static 'svg/bootstrap-icons.svg'  %}#printer" />
                         </svg>
                         <span>Imprimer</span>
-                    </a>
+                    </button>
                 </div>
                 <!-- Edit -->
                 {% get_obj_perms request.user for request.site as "user_site_perms" %}
@@ -160,6 +160,19 @@
                             &nbsp;
                             Éditer
                         </a>
+                    </div>
+                {% endif %}
+                <!-- Demarches Simplifiées callout integration -->
+                {% if is_dsresource %}
+                    <div class="fr-callout fr-mt-2w p-4">
+                        <img height="31px"
+                             width="32px"
+                             src="{% static 'svg/picto-demarches_simplifiees.svg' %}"
+                             alt="Pictogramme Démarches Simpliffiées">
+                        <h3 class="fr-callout__title fr-text--lg fr-pb-3v">Démarches Simplifiées</h3>
+                        <p class="fr-callout__text fr-text--sm">
+                            Les informations présentes sur le portail sont utilisées pour pré-remplir automatiquement le dossier dans Démarches Simplifiées
+                        </p>
                     </div>
                 {% endif %}
                 <div class="mt-4">
