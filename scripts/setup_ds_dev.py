@@ -71,6 +71,10 @@ def setup_ds_folder():
     update_or_create_ds_folder.s(recommendation_id=reco.id)()
 
 
+assert _detr_resource(), "Resource DETR not found."  # nosec
+assert _mec_site(), "Site MEC not found."  # nosec
+assert _project_in_57(), "No project in dpt 57 found."  # nosec
+
 update_detr_resource()
 setup_ds_resources()
 setup_ds_folder()
