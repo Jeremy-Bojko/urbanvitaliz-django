@@ -78,3 +78,7 @@ class DSFolder(TimeStampedModel):
     def save(self, *args, **kwargs):
         self.content_hash = hash_data(dict(self.content))
         super().save(*args, **kwargs)
+
+    @property
+    def prefilled_count(self) -> int:
+        return len(self.content)
