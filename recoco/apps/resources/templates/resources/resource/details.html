@@ -140,7 +140,8 @@
                 {% get_obj_perms request.user for request.site as "user_site_perms" %}
                 {% if "manage_resources" in user_site_perms %}
                     <div id="edit-resource" class="mt-3">
-                        {% include "dsrc/core/blocks/buttons/button_link.html" with href_url="resources-resource-update" href_url_var=resource.id label="Editer" variant="secondary" classes="w-100 justify-content-center fr-btn--icon-left fr-icon-edit-line" %}
+                        <a class="fr-btn fr-btn--secondary w-100 justify-content-center fr-btn--icon-left fr-icon-edit-line"
+                           href="{% url "resources-resource-update" resource.id %}">Editer</a>
                     </div>
                 {% endif %}
                 <!-- Demarches Simplifiées callout integration -->
