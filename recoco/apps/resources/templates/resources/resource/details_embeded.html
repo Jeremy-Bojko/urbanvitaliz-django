@@ -41,14 +41,18 @@
             - Add a dynamic link to the resource
             - Show only if the resource is a DS resource
             {% endcomment %}
-            <a class="fr-btn fr-btn--secondary fr-btn--sm fr-mr-1w"
-               :href="resource.ds_folder.dossier_url">
-                <img height="31px"
-                     width="32px"
-                     src="{% static 'svg/picto-demarches_simplifiees.svg' %}"
-                     alt="Pictogramme Démarches Simpliffiées">
-                Voir mon dossier
-            </button>
+
+            {% comment %} {% if resource.is_dsresource %}
+                <a class="fr-btn fr-btn--secondary fr-btn--sm fr-mr-1w"
+                :href="resource.ds_folder.dossier_url">
+                    <img height="31px"
+                        width="32px"
+                        src="{% static 'svg/picto-demarches_simplifiees.svg' %}"
+                        alt="Pictogramme Démarches Simpliffiées">
+                    Voir mon dossier
+                </a>
+            {% endif %} {% endcomment %}
+
             {% if contacts.count > 0 %}
                 <a style="border: solid 1px #222;
                           border-bottom-left-radius: 2px;

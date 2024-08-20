@@ -8,4 +8,6 @@ class DSFolderSerializer(serializers.ModelSerializer):
         model = DSFolder
         fields = [
             "dossier_url",
+            "prefilled_count",
+            "state",
         ]

@@ -229,8 +229,6 @@ class ResourceDetailView(UserPassesTestMixin, BaseResourceDetailView):
         context = super().get_context_data(**kwargs)
         resource = self.get_object()
 
-        context["is_dsresource"] = resource.dsresource_set.exists()
-
         if check_if_advisor(self.request.user):
             context["projects_used_by"] = (
                 projects.Project.on_site.filter(

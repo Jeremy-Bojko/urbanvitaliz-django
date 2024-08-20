@@ -74,7 +74,7 @@
                     <img height="31px"
                          width="32px"
                          src="{% static 'svg/picto-demarches_simplifiees.svg' %}"
-                         alt="Pictogramme Démarches Simpliffiées">
+                         alt="Pictogramme Démarches Simplifiées">
                     Dossier Démarches Simplifiées
                     <span class="fr-badge fr-badge--sm fr-badge--purple-glycine">Brouillon</span>
                 </p>
@@ -87,9 +87,8 @@
                 {% comment %} TODO
                 - Complete the tooltip
                 - Fix the tooltip behavior
-                - Get number of pre-filled data
                 {% endcomment %}
-                <span class="fr-ml-2w fr-text-label--blue-france fr-text--xs">8 données pré-remplies</span>
+                <span class="fr-ml-2w fr-text-label--blue-france fr-text--xs" x-text="`${task.ds_folder.prefilled_count} données pré-remplies`"></span>
                 <button class="fr-btn--tooltip fr-btn"
                         type="button"
                         @click.stop=""
