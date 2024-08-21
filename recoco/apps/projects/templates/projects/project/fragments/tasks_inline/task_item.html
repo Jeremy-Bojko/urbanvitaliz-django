@@ -78,6 +78,15 @@
                 <a class="fr-btn fr-btn--secondary fr-btn--sm"
                    @click.stop=""
                    x-bind:href="task.ds_folder.dossier_url">Voir mon dossier</a>
+                <span class="fr-ml-2w fr-text-label--blue-france fr-text--xs">
+                    {% if task.ds_folder.prefilled_count > 1 %}
+                        {{ task.ds_folder.prefilled_count }} données pré-remplies
+                    {% elif task.ds_folder.prefilled_count > 0 %}
+                        1 donnée pré-remplie
+                    {% else %}
+                        aucune donnée pré-remplie
+                    {% endif %}
+                </span>
                 <hr class="fr-mb-3w">
             </div>
         </template>
