@@ -66,7 +66,7 @@
         <hr>
         <template x-if="task.ds_folder">
             <div>
-                {% comment %} TODO
+                {% comment %} TODO DS
                 - Show only if the resource is a DS resource
                 - Show badge when DS folder is in draft
                 {% endcomment %}
@@ -84,7 +84,7 @@
                 <a class="fr-btn fr-btn--secondary fr-btn--sm"
                    @click.stop=""
                    x-bind:href="task.ds_folder.dossier_url">Voir mon dossier</a>
-                {% comment %} TODO
+                {% comment %} TODO DS
                 - Complete the tooltip
                 - Fix the tooltip behavior
                 {% endcomment %}
