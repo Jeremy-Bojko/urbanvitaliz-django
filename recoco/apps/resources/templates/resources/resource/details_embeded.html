@@ -37,12 +37,10 @@
 <div class="row">
     <div class="col-11 px-2 mx-auto" x-data="PrintTaskResource">
         <div class="d-flex justify-content-end pb-2 mb-2 task-preview-cta mt-2">
-            {% comment %} TODO DS
-            - Add a dynamic link to the resource
-            {% endcomment %}
-            {% if resource.is_dsresource %}
+            {% if task and task.ds_folder %}
                 <a class="fr-btn fr-btn--secondary fr-btn--sm fr-mr-1w"
-                   :href="resource.ds_folder.dossier_url">
+                   href="{{ task.ds_folder.dossier_url }}"
+                   target="blank">
                     <img height="25px"
                          width="26px"
                          src="{% static 'svg/picto-demarches_simplifiees.svg' %}"

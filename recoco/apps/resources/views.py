@@ -250,6 +250,18 @@ class EmbededResourceDetailView(BaseResourceDetailView):
     template_name = "resources/resource/details_embeded.html"
     pk_url_kwarg = "resource_id"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        if task_id := self.request.GET.get("task_id"):
+            context["task"] = (
+                self.object.task_set.filter(pk=task_id)
+                .select_related("ds_folder")
+                .first()
+            )
+
+        return context
+
 
 ########################################################################
 # Deleting resources
