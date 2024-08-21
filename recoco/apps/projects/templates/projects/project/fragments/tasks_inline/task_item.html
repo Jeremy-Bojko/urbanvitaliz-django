@@ -67,7 +67,6 @@
         <template x-if="task.ds_folder">
             <div>
                 {% comment %} TODO DS
-                - Show only if the resource is a DS resource
                 - Show badge when DS folder is in draft
                 {% endcomment %}
                 <p class="fw-bolder">
@@ -76,7 +75,7 @@
                          src="{% static 'svg/picto-demarches_simplifiees.svg' %}"
                          alt="Pictogramme Démarches Simplifiées">
                     Dossier Démarches Simplifiées
-                    <span class="fr-badge fr-badge--sm fr-badge--purple-glycine">Brouillon</span>
+                    {% comment %} <span class="fr-badge fr-badge--sm fr-badge--purple-glycine" x-if="task.ds_folder.state === '???'">Brouillon</span> {% endcomment %}
                 </p>
                 <p class="fr-text-mention--grey fr-text--sm fr-my-3v">
                     Complétez l’état des lieux pour pré-remplir automatiquement le dossier de candidature.

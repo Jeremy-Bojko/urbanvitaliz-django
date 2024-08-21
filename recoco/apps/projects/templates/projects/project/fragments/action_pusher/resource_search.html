@@ -74,14 +74,10 @@
                                 </div>
                             </div>
                         </div>
-                        {% comment %} TODO
-                        - Show only if the resource is a DS resource
-                        - Add category name to resource object in api endpoint
-                        {% endcomment %}
                         <div>
                             <ul class="fr-badge-group fr-p-0">
                                 <li>
-                                    <span class="fr-badge fr-badge--sm fr-badge--green-menthe" x-text="resource.id"</span>
+                                    <span class="fr-badge fr-badge--sm fr-badge--green-menthe" x-text="resource.category.name"</span>
                                 </li>
                                 <li x-show="resource.is_dsresource">
                                     <span class="fr-badge fr-badge--sm text-transform-none">

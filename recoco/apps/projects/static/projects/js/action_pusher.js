@@ -108,8 +108,6 @@ function action_pusher_app() {
 		},
 
 		async getResources() {
-			var tasksFromApi = [];
-
 			this.isBusy = true;
 
 			const response = await fetch('/api/resources/');
