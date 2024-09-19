@@ -6,6 +6,11 @@ import { schemaOnboardingStep2ProjectFormValidator } from '../utils/ajv/schema/a
 import { schemaOnboardingPrefillSetuserFormValidator } from '../utils/ajv/schema/ajv.schema.PrefillSetuserForm';
 import { schemaPrefillProjectFormValidator } from '../utils/ajv/schema/ajv.schema.PrefillProjectForm';
 
+/**
+ * Component returning a AJV schema to validate form field.
+ * @param {string} schemaValidatorName - The name of the schema validator.
+ * @returns {object} - The AjvValidationSchema object.
+ */
 Alpine.data('AjvValidationSchema', (schemaValidatorName) => {
   const schemasValidator = {
     schemaOnboardingStep1SignupFormValidator,

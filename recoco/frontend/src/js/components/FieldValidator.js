@@ -4,6 +4,15 @@ import {
   removeAndAddClassConditionaly,
 } from '../utils/cssUtils';
 
+/**
+ * FieldValidator is a function that creates a field validator object.
+ * @param {boolean} required - Indicates if the field is required.
+ * @param {string} value - The value of the field.
+ * @param {string} [fieldType='input'] - The type of the field.
+ * @param {Array<string>} eventListened - The events to listen to.
+ * @param {boolean} [submittedForm=false] - Indicates if the form has been submitted.
+ * @returns {object} - The field validator object.
+ */
 function FieldValidator(
   required,
   value,

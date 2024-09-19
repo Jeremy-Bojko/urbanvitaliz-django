@@ -1,6 +1,10 @@
 import Alpine from 'alpinejs';
 import { escapeHtml } from '../utils/escapeHTML';
 
+/**
+ * Auth component.
+ * @returns {object} - Auth object.
+ */
 function Auth() {
   return {
     initLogin() {

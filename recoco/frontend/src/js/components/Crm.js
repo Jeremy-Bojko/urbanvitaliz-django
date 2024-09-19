@@ -1,8 +1,9 @@
 import Alpine from 'alpinejs';
 
-Alpine.data('Crm', Crm);
-Alpine.data('Note', Note);
-
+/**
+ * Crm component, manage sidebar in crm.
+ * @returns {Object} The Crm component object.
+ */
 function Crm() {
   return {
     init() {
@@ -22,7 +23,12 @@ function Crm() {
     },
   };
 }
+Alpine.data('Crm', Crm);
 
+/**
+ * Note component, manage toggle button for crm note.
+ * @returns {Object} The Note component object.
+ */
 function Note() {
   return {
     isOpen: false,
@@ -38,3 +44,4 @@ function Note() {
     },
   };
 }
+Alpine.data('Note', Note);

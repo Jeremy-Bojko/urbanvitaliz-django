@@ -8,6 +8,11 @@ import '../../css/tiptap.css';
 
 const MarkdownEditor = createMarkdownEditor(Editor);
 
+/**
+ * Initializes the Alpine data for the editor component.
+ * @param {string} content - The initial content of the editor.
+ * @returns {EditorData} The Alpine data for the editor component.
+ */
 Alpine.data('editor', (content) => {
   let editor;
 
@@ -41,7 +46,7 @@ Alpine.data('editor', (content) => {
           }),
         ],
         content: content,
-        onCreate({ editor }) {
+        onCreate() {
           _this.updatedAt = Date.now();
         },
         onUpdate({ editor }) {
@@ -52,7 +57,7 @@ Alpine.data('editor', (content) => {
           _this.$store.editor.isEditing = editor.getMarkdown() != '';
           _this.$store.editor.currentMessage = editor.getMarkdown();
         },
-        onSelectionUpdate({ editor }) {
+        onSelectionUpdate() {
           _this.updatedAt = Date.now();
         },
       });

@@ -8,8 +8,11 @@ import api, {
   regionsUrl,
 } from '../utils/api';
 
-Alpine.data('KanbanProjects', boardProjectsApp);
-
+/**
+ * KanbanProjects component.
+ * @param {string} currentSiteId - The ID of the current site.
+ * @returns {object} - The Alpine.js data object for the KanbanProjects component.
+ */
 function boardProjectsApp(currentSiteId) {
   return {
     projectList: [],
@@ -302,3 +305,5 @@ function boardProjectsApp(currentSiteId) {
     },
   };
 }
+
+Alpine.data('KanbanProjects', boardProjectsApp);

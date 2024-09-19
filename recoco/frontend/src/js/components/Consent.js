@@ -1,8 +1,10 @@
 import Alpine from 'alpinejs';
 import axios from 'axios';
 
-Alpine.data('Consent', Consent);
-
+/**
+ * Cookie banner component.
+ * @returns {Object} The Consent component object.
+ */
 function Consent() {
   return {
     userHasSelectedCookies: false,
@@ -27,3 +29,4 @@ function Consent() {
     },
   };
 }
+Alpine.data('Consent', Consent);

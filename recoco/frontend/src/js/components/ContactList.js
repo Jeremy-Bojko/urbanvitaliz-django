@@ -1,5 +1,9 @@
 import Alpine from 'alpinejs';
 
+/**
+ * ContactList component, used to find contact link to a resource.
+ * @returns {Object} The ContactList object.
+ */
 function ContactList() {
   return {
     currentHash: null,

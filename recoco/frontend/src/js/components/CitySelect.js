@@ -5,8 +5,22 @@ import {
   removeClassIfExists,
 } from '../utils/cssUtils';
 
-Alpine.data('CitySearch', CitySearch);
-
+/**
+ * CitySearch component.
+ * @param {boolean} required - Indicates if the city search is required.
+ * @param {string} requestMethod - The HTTP request method to use.
+ * @param {boolean} dsfr - Indicates if the DSFR library is used.
+ * @returns {object} - CitySearch object.
+ *
+ * @property {boolean} isLoading - Indicates if the component is in a loading state.
+ * @property {string|null} postal - The postal code.
+ * @property {array|null} cities - The list of cities.
+ * @property {boolean} required - Indicates if the city search is required.
+ * @property {string|null} currentPostal - The current postal code.
+ * @property {string|null} currentInsee - The current INSEE code.
+ * @property {string} requestMethod - The HTTP request method to use.
+ * @property {boolean} dsfr - Indicates if the DSFR library is used.
+ */
 function CitySearch(required = false, requestMethod = 'GET', dsfr = false) {
   return {
     // other default properties
@@ -103,3 +117,5 @@ function CitySearch(required = false, requestMethod = 'GET', dsfr = false) {
     },
   };
 }
+
+Alpine.data('CitySearch', CitySearch);
