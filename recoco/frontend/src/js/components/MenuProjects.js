@@ -10,9 +10,7 @@ Alpine.data('MenuProjects', (isCollectivity = false) => {
     async getProjetctsData() {
       let projectList = this.$store.projectQueue.get();
       if (isCollectivity) {
-        projectList = (await this.$store.projects.getUserProjetsStatus()).map(
-          (x) => x.project
-        );
+        projectList = await this.$store.projects.getProjets();
       }
 
       this.rawProjectList = [...projectList];

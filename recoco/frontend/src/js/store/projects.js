@@ -1,5 +1,9 @@
 import Alpine from 'alpinejs';
-import api, { sitesConfigUrl, userProjectStatusUrl } from '../utils/api';
+import api, {
+  projectsUrl,
+  sitesConfigUrl,
+  userProjectStatusUrl,
+} from '../utils/api';
 
 Alpine.store('projects', {
   projects: [],
@@ -9,6 +13,11 @@ Alpine.store('projects', {
     const json = await api.get(userProjectStatusUrl());
 
     return (this.userProjetsStatus = json.data);
+  },
+  async getProjets() {
+    const json = await api.get(projectsUrl());
+
+    return json.data;
   },
   async getSitesConfig() {
     const json = await api.get(sitesConfigUrl());
