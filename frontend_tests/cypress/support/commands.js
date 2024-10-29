@@ -119,7 +119,7 @@ Cypress.Commands.add('declineCookies', () => {
   cy.visit('/');
 });
 
-Cypress.Commands.add('createProject', (label, objProject = null) => {
+Cypress.Commands.add('createProject', (label, objProject = project) => {
   cy.visit('/');
 
   cy.get('[data-test-id="button-need-help"]')
@@ -172,15 +172,8 @@ Cypress.Commands.add('createProject', (label, objProject = null) => {
 });
 
 Cypress.Commands.add('becomeAdvisor', () => {
-  cy.get('body').then((body) => {
-    if (body.find('#positioning-form').length > 0) {
-      cy.get('[data-test-id="button-join-as-advisor"]').click({
-        force: true,
-      });
-    } else {
-      assert.isOk('advisor', 'already advisor');
-    }
-  });
+  cy.get('[data-test-id="button-join-as-advisor"]').click({ force: true });
+  cy.get('[data-test-id="button-validate-role"]').click({ force: true });
 });
 
 Cypress.Commands.add(
