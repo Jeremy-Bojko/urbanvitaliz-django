@@ -323,6 +323,9 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_LOGIN_ON_PASSWORD_RESET = True
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = "/login-redirect"
 
+# Common signup form shared by account and socialaccount
+ACCOUNT_SIGNUP_FORM_CLASS = "recoco.apps.home.forms.CustomBaseSignupForm"
+
 ACCOUNT_FORMS = {
     "login": "recoco.apps.home.forms.UVLoginForm",
     "signup": "recoco.apps.home.forms.UVSignupForm",
@@ -340,11 +343,11 @@ SOCIALACCOUNT_OPENID_CONNECT_URL_PREFIX = "oidc"
 SOCIALACCOUNT_LOGIN_ON_GET = True
 SOCIALACCOUNT_AUTO_SIGNUP = False
 SOCIALACCOUNT_EMAIL_REQUIRED = True
-# SOCIALACCOUNT_EMAIL_AUTHENTICATION = True
-# SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT = True
+SOCIALACCOUNT_EMAIL_AUTHENTICATION = True
+SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT = True
 
 SOCIALACCOUNT_FORMS = {
-    "signup": "recoco.apps.social_account.forms.SocialSignupForm",
+    "signup": "recoco.apps.social_account.forms.SignupForm",
 }
 
 SOCIALACCOUNT_PROVIDERS = {

@@ -1,7 +1,13 @@
-from allauth.socialaccount.forms import SignupForm as BaseSocialSignupForm
-
-from recoco.apps.home.forms import UVSignupForm as BaseSignupForm
+from allauth.socialaccount.forms import SignupForm as SocialSignupForm
 
 
-class SocialSignupForm(BaseSocialSignupForm, BaseSignupForm):
-    pass
+class SignupForm(SocialSignupForm):
+    field_order = [
+        "first_name",
+        "last_name",
+        "organization",
+        "organization_position",
+        "email",
+        "phone_no",
+        "captcha",
+    ]

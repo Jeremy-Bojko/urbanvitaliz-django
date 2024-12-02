@@ -16,36 +16,16 @@ from phonenumber_field.widgets import PhoneNumberInternationalFallbackWidget
 from recoco.apps.addressbook import models as addressbook_models
 
 
-class UVSignupForm(SignupForm):
-    field_order = [
-        "first_name",
-        "last_name",
-        "organization",
-        "organization_position",
-        "email",
-        "phone_no",
-        "password1",
-        "password2",
-        "captcha",
-    ]
-
+class CustomBaseSignupForm(forms.Form):
     def __init__(self, *args, **kwargs):
-        super(UVSignupForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
+
         # Skip captcha during tests
         if "PYTEST_CURRENT_TEST" in os.environ:
             self.fields.pop("captcha")
 
         self.fields["email"].widget = forms.TextInput(
             attrs={"type": "email", "class": "fr-input fr-mt-2v fr-mb-4v"}
-        )
-        self.fields["password1"].label = (
-            "Définissez votre mot de passe (8 caractères minimum)"
-        )
-        self.fields["password1"].widget = forms.PasswordInput(
-            attrs={"class": "fr-input fr-mt-2v fr-mb-4v"}
-        )
-        self.fields["password2"].widget = forms.PasswordInput(
-            attrs={"class": "fr-input fr-mt-2v fr-mb-4v"}
         )
 
     first_name = forms.CharField(
@@ -54,12 +34,14 @@ class UVSignupForm(SignupForm):
         label="Prénom",
         widget=forms.TextInput(attrs={"class": "fr-input fr-mt-2v fr-mb-4v"}),
     )
+
     last_name = forms.CharField(
         max_length=50,
         required=True,
         label="Nom",
         widget=forms.TextInput(attrs={"class": "fr-input fr-mt-2v fr-mb-4v"}),
     )
+
     organization = forms.CharField(
         max_length=50,
         required=True,
@@ -101,6 +83,33 @@ class UVSignupForm(SignupForm):
         user.profile.save()
 
         return user
+
+
+class UVSignupForm(SignupForm):
+    field_order = [
+        "first_name",
+        "last_name",
+        "organization",
+        "organization_position",
+        "email",
+        "phone_no",
+        "password1",
+        "password2",
+        "captcha",
+    ]
+
+    def __init__(self, *args, **kwargs):
+        super(UVSignupForm, self).__init__(*args, **kwargs)
+
+        self.fields["password1"].label = (
+            "Définissez votre mot de passe (8 caractères minimum)"
+        )
+        self.fields["password1"].widget = forms.PasswordInput(
+            attrs={"class": "fr-input fr-mt-2v fr-mb-4v"}
+        )
+        self.fields["password2"].widget = forms.PasswordInput(
+            attrs={"class": "fr-input fr-mt-2v fr-mb-4v"}
+        )
 
 
 class UVLoginForm(LoginForm):
