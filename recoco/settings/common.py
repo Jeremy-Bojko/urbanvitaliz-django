@@ -338,8 +338,14 @@ ACCOUNT_FORMS = {
 SOCIALACCOUNT_ADAPTER = "recoco.apps.social_account.adapters.SocialAccountAdapter"
 SOCIALACCOUNT_OPENID_CONNECT_URL_PREFIX = "oidc"
 SOCIALACCOUNT_LOGIN_ON_GET = True
-SOCIALACCOUNT_IS_OPEN_FOR_SIGNUP = False
-# SOCIALACCOUNT_AUTO_SIGNUP = False # TODO: make user fill the missing data at signup
+SOCIALACCOUNT_AUTO_SIGNUP = False
+SOCIALACCOUNT_EMAIL_REQUIRED = True
+# SOCIALACCOUNT_EMAIL_AUTHENTICATION = True
+# SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT = True
+
+SOCIAL_ACCOUNT_FORMS = {
+    "signup": "recoco.apps.home.forms.UVSignupForm",
+}
 
 SOCIALACCOUNT_PROVIDERS = {
     # https://docs.allauth.org/en/latest/socialaccount/providers/openid_connect.html
