@@ -48,9 +48,6 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
         """
         return super().is_open_for_signup(request, sociallogin)
 
-    def is_auto_signup_allowed(self, request, sociallogin):
-        return super().is_auto_signup_allowed(request, sociallogin)
-
 
 class CustomOpenIDConnectOAuth2Adapter(OpenIDConnectOAuth2Adapter):
     @property
