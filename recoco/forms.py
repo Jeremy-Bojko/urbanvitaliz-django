@@ -6,7 +6,7 @@ from django import forms
 from phonenumber_field.formfields import PhoneNumberField
 from phonenumber_field.widgets import PhoneNumberInternationalFallbackWidget
 
-from recoco.apps.addressbook import models as addressbook_models
+from recoco.apps.addressbook.models import Organization
 
 
 class BaseSignupForm(forms.Form):
@@ -59,23 +59,14 @@ class BaseSignupForm(forms.Form):
 
     captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox(api_params={"hl": "fr"}))
 
-    def save(self, request):
-        # Ensure you call the parent class's save.
-        # .save() returns a User object.
-        user = super().save(request)
-
+    def signup(self, request, user):
         data = self.cleaned_data
 
         org_name = data.get("organization")
-        organization = addressbook_models.Organization.get_or_create(org_name)
+        organization = Organization.get_or_create(org_name)
         organization.sites.add(request.site)
 
         user.profile.organization = organization
         user.profile.organization_position = data["organization_position"]
         user.profile.phone_no = data.get("phone_no", None)
         user.profile.save()
-
-        return user
-
-    def signup(self, request, user):
-        pass
