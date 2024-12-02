@@ -344,7 +344,7 @@ SOCIALACCOUNT_EMAIL_REQUIRED = True
 # SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT = True
 
 SOCIALACCOUNT_FORMS = {
-    "signup": "recoco.apps.home.forms.UVSignupForm",
+    "signup": "recoco.apps.social_account.forms.SocialSignupForm",
 }
 
 SOCIALACCOUNT_PROVIDERS = {
