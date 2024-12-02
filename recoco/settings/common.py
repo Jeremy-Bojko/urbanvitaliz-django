@@ -19,6 +19,9 @@ from multisite import SiteID
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# import sys
+# sys.path.append(str(BASE_DIR / "recoco"))
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -324,7 +327,7 @@ ACCOUNT_LOGIN_ON_PASSWORD_RESET = True
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = "/login-redirect"
 
 # Common signup form shared by account and socialaccount
-ACCOUNT_SIGNUP_FORM_CLASS = "recoco.apps.home.forms.CustomBaseSignupForm"
+ACCOUNT_SIGNUP_FORM_CLASS = "recoco.forms.BaseSignupForm"
 
 ACCOUNT_FORMS = {
     "login": "recoco.apps.home.forms.UVLoginForm",
